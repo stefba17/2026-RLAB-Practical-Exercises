@@ -1,0 +1,133 @@
+---
+title: "ggplot2 Hands-On Practice"
+format: html
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+Time to apply what we learned! Work through the activity that matches your experience level. If you finish early, try the bonus question or move on to the next level!
+
+---
+
+## Activity 1: Fill in the blanks
+
+**Goal:** Build a scatterplot of penguin bill length vs. bill depth, colored by
+species, using what you learned today.
+
+**Instructions:** Fill in the `___` blanks to complete the code. Run it and
+check that your plot displays correctly!
+
+```{r beginner, eval=FALSE}
+ggplot(
+  ___ = penguins,
+  mapping = aes(x = bill_length_mm, y = ___, color = ___)
+) +
+  ___() +
+  labs(
+    title = "Bill length and bill depth by species",
+    x = "Bill length (mm)",
+    y = "___",
+    color = "___"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(___ = 0.5), 
+    plot.subtitle = element_text(___ = 0.5)
+  )
+```
+
+**Hints:**
+
+- The dataset you've been using all day goes in the first blank
+- Find the variable name for bill depth
+- Use the same geom as the scatterplots in the presentation
+- Axis labels should be human-readable (e.g., "Bill depth (mm)")
+- Revist **Manually modifying theme** slides to center titles
+
+**Bonus:** Can you also add `shape = species` inside `aes()` to make the
+plot accessible to colorblind viewers?
+
+---
+
+## Activity 2: Update the facet plots
+
+**Goal:** Recreate and then enhance the faceted penguin plot from the
+presentation.
+
+**Instructions:** Start with the faceted plot from the slides, then make the
+following modifications:
+
+1. **Apply a theme** — add a theme with the following specifications:
+- Position the title and subtitle to be right aligned 
+- Set the legend position to "bottom"
+- Remove major and minor gridlines
+- Add axes lines that are colored blue
+- Set your theme as a function before applying it to your figure.
+2. **Add color** — map `color = species` inside so each species
+panel has a distinct color
+3. **Fix the legend position** — the default `legend.position = c(0.85, 0.2)`
+may overlap the facets; adjust it to `"bottom"` instead
+**Bonus:** Try `facet_grid(sex ~ species)` instead of `facet_wrap(~ species)`.
+What changes? What does this tell you that the original plot didn't?
+
+```{r intermediate, eval=FALSE}
+# Facet plots from presentation - modify according to instructions above
+  ggplot(
+    data = penguins,
+    mapping = aes(x = flipper_length_mm, y = body_mass_g)
+  ) +
+    geom_point() +
+    facet_wrap(~ species) +
+    labs(
+      title = "Penguin body mass by flipper length",
+      subtitle = "Faceted by species",
+      x = "Flipper length (mm)",
+      y = "Body Mass (g)"
+    )
+```
+
+---
+
+
+## Activity 3: Create figure using new dataset
+
+**Goal:** Use the `mtcars` dataset to independently apply everything from
+the presentation to answer a research question.
+
+**Background:** `mtcars` is a built-in R dataset containing performance and
+design specs for 32 car models. Run `?mtcars` to see the full variable list.
+Key variables:
+
+| Variable | Description |
+|----------|-------------|
+| `mpg` | Miles per gallon |
+| `hp` | Horsepower |
+| `wt` | Weight (1000 lbs) |
+| `cyl` | Number of cylinders (4, 6, or 8) |
+| `am` | Transmission (0 = automatic, 1 = manual) |
+
+**Research question:** *Does the relationship between horsepower and fuel
+efficiency differ by number of cylinders?*
+
+**Your task — build a complete, publication-ready figure that:**
+
+1. Plots horsepower (x) vs. mpg (y) as a scatterplot
+2. Assigns colors and shapes points by number of cylinders
+ — the variable is numeric, so you'll need `factor(cyl)` inside `aes()` to treat it as a category
+3. Adds a line of best fit **per cylinder group** `
+4. Facets by transmission type 
+— use `labeller = labeller(am = c("0" = "Automatic", "1" = "Manual"))` inside
+`facet_wrap()` to replace 0/1 with readable labels
+5. Applies a clean custom theme
+6. Has polished axis labels, a title, and a subtitle
+
+```{r advanced, eval=FALSE}
+# Your code here!
+```
+
+**Bonus:** Add `se = TRUE` back to `geom_smooth()` (it's the default). What
+does the shaded ribbon represent, and when might it be useful in a
+scientific figure?
